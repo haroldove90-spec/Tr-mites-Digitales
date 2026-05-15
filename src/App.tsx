@@ -70,7 +70,7 @@ const steps = [
     step: "03",
     title: "Recibes en tu móvil",
     description: "Te enviamos el archivo directamente a tu WhatsApp o correo para que lo uses de inmediato sin complicaciones.",
-    img: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800"
+    img: "https://storage.googleapis.com/documentos.transparencia.congresoqroo.gob.mx/static/img/tramites_2.jpg"
   }
 ];
 
@@ -180,7 +180,7 @@ export default function App() {
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=80&w=2000" 
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOE5TuX3y_FUOXMUn8QzE6s_1hVxvWAyuWwg&s" 
             alt="Fondo de hero" 
             className="w-full h-full object-cover object-center"
           />
