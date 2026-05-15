@@ -130,6 +130,7 @@ export default function App() {
           <div className="hidden lg:flex items-center gap-6">
             <a 
               href={waLink} 
+              target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-2.5 bg-transparent border-2 border-amber-500 text-amber-500 font-bold rounded-full hover:bg-amber-500 hover:text-slate-950 transition-all"
             >
               <MessageCircle className="w-4 h-4" />
@@ -163,6 +164,7 @@ export default function App() {
               
               <a 
                 href={waLink}
+                target="_blank" rel="noopener noreferrer"
                 className="mt-4 inline-flex items-center justify-center gap-2 px-6 py-4 bg-amber-500 text-slate-950 font-bold rounded-full w-full uppercase tracking-wider"
               >
                 <MessageCircle className="w-5 h-5" />
@@ -211,6 +213,7 @@ export default function App() {
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
               <a 
                 href={waLink}
+                target="_blank" rel="noopener noreferrer"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-full shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)] transition-all active:scale-95 text-lg"
               >
                 Solicitar trámite ahora
@@ -267,6 +270,7 @@ export default function App() {
 
                 <a 
                   href={waLink}
+                  target="_blank" rel="noopener noreferrer"
                   className="mt-auto w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-slate-50 text-slate-900 hover:bg-amber-500 hover:text-slate-950 font-bold rounded-full transition-colors group-hover:shadow-md"
                 >
                   Solicitar ahora <ArrowRight className="w-4 h-4" />
@@ -351,6 +355,7 @@ export default function App() {
           <div className="mt-24 text-center">
             <a 
               href={waLink}
+              target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-8 py-4 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-full transition-transform active:scale-95 shadow-xl text-lg hover:shadow-slate-900/30"
             >
               Comenzar mi trámite 
@@ -431,6 +436,7 @@ export default function App() {
             <p className="font-serif font-semibold text-white mb-4 text-lg">¿Necesitas ayuda prioritaria?</p>
             <a 
               href={waLink}
+              target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-8 py-4 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-full transition-colors shadow-lg"
             >
               <MessageCircle className="w-5 h-5" />
@@ -450,6 +456,7 @@ export default function App() {
       {/* Floating WhatsApp Button */}
       <motion.a
         href={waLink}
+        target="_blank" rel="noopener noreferrer"
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 1, type: "spring", stiffness: 200, damping: 20 }}
