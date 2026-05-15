@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   FileText, ShieldCheck, Zap, ChevronDown, 
-  MessageCircle, ArrowRight, Building2, Landmark, HeartPulse
+  MessageCircle, ArrowRight, Building2, Landmark, HeartPulse, Menu, X
 } from 'lucide-react';
 
 const waLink = "https://wa.me/529619183857?text=Hola,%20necesito%20ayuda%20con%20un%20trámite";
@@ -91,6 +91,14 @@ const faqs = [
 
 export default function App() {
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const toggleFaq = (index: number) => {
     setOpenFaqIndex(openFaqIndex === index ? null : index);
@@ -99,83 +107,116 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#F4F5F7] text-slate-900 font-sans selection:bg-amber-200">
       
-      {/* Navbar Minimalista */}
-      <nav className="fixed top-0 inset-x-0 z-50 bg-[#F4F5F7]/80 backdrop-blur-xl border-b border-slate-200/50">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="bg-slate-900 p-2.5 rounded-xl">
-              <FileText className="w-5 h-5 text-amber-500" />
+      {/* Navbar ZikZag Premium */}
+      <nav className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${scrolled || isMobileMenuOpen ? 'bg-slate-950/95 backdrop-blur-xl border-b border-white/10 py-4' : 'bg-transparent py-6'}`}>
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+          <a href="#inicio" className="flex items-center gap-3 relative z-50">
+            <div className="bg-amber-500 p-2.5 rounded-xl border border-amber-400">
+              <FileText className="w-5 h-5 text-slate-950" />
             </div>
-            <span className="font-serif font-bold text-xl tracking-tight text-slate-900">
-              Trámites<span className="text-amber-600 italic">Digitales</span>
+            <span className="font-serif font-bold text-xl tracking-tight text-white">
+              Trámites<span className="text-amber-500 italic">Digitales</span>
             </span>
+          </a>
+
+          {/* Desktop Nav */}
+          <div className="hidden lg:flex items-center gap-8">
+            <a href="#inicio" className="text-sm font-medium text-slate-100 hover:text-amber-500 transition-colors uppercase tracking-wider">Inicio</a>
+            <a href="#servicios" className="text-sm font-medium text-slate-100 hover:text-amber-500 transition-colors uppercase tracking-wider">Catálogo</a>
+            <a href="#como-funciona" className="text-sm font-medium text-slate-100 hover:text-amber-500 transition-colors uppercase tracking-wider">Cómo Funciona</a>
+            <a href="#faq" className="text-sm font-medium text-slate-100 hover:text-amber-500 transition-colors uppercase tracking-wider">FAQ</a>
           </div>
-          <div>
+
+          <div className="hidden lg:flex items-center gap-6">
             <a 
               href={waLink} 
-              className="hidden sm:inline-flex items-center gap-2 px-6 py-2.5 bg-slate-900 text-white font-medium rounded-full hover:bg-slate-800 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-2.5 bg-transparent border-2 border-amber-500 text-amber-500 font-bold rounded-full hover:bg-amber-500 hover:text-slate-950 transition-all"
             >
-              <MessageCircle className="w-4 h-4 text-amber-500" />
-              Contacto Rápido
-            </a>
-            <a 
-              href={waLink} 
-              className="sm:hidden inline-flex items-center justify-center p-3 bg-slate-900 text-amber-500 rounded-full"
-            >
-              <MessageCircle className="w-5 h-5" />
+              <MessageCircle className="w-4 h-4" />
+              Contacto
             </a>
           </div>
-        </div>
-      </nav>
 
-      {/* Hero Section (Asymmetrical & Premium) */}
-      <section className="relative pt-32 pb-24 md:pt-48 md:pb-32 overflow-hidden">
-        {/* Geometric Background Blob */}
-        <div className="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-[800px] h-[800px] bg-slate-200/50 rounded-full blur-3xl -z-10 mix-blend-multiply" />
-        <div className="absolute bottom-0 left-0 translate-y-1/3 -translate-x-1/3 w-[600px] h-[600px] bg-amber-100/40 rounded-full blur-3xl -z-10 mix-blend-multiply" />
-
-        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="max-w-2xl"
+          {/* Mobile Menu Icon */}
+          <button 
+            className="lg:hidden relative z-50 p-2 text-white hover:text-amber-500 transition-colors"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
-            <h1 className="font-serif text-5xl md:text-7xl font-bold text-slate-900 leading-[1.1] mb-6">
-              Tus trámites oficiales, <br />
-              <span className="text-amber-600 italic">sin filas</span> y en minutos.
-            </h1>
-            <p className="text-lg text-slate-600 mb-10 leading-relaxed font-light">
-              Obtenemos tus actas, constancias y documentos del SAT, IMSS o Registro Civil de forma <strong className="font-semibold text-slate-900">100% legal y segura</strong>. Recibe tu PDF directamente en WhatsApp o correo.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center gap-4">
+            {isMobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
+          </button>
+        </div>
+
+        {/* Mobile Dropdown */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div 
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.2 }}
+              className="absolute top-full left-0 right-0 bg-slate-950 border-b border-white/10 px-6 py-8 flex flex-col gap-6 lg:hidden shadow-2xl"
+            >
+              <a href="#inicio" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-medium text-slate-100 hover:text-amber-500 uppercase tracking-widest">Inicio</a>
+              <a href="#servicios" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-medium text-slate-100 hover:text-amber-500 uppercase tracking-widest">Catálogo de Servicios</a>
+              <a href="#como-funciona" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-medium text-slate-100 hover:text-amber-500 uppercase tracking-widest">Cómo Funciona</a>
+              <a href="#faq" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-medium text-slate-100 hover:text-amber-500 uppercase tracking-widest">Preguntas Frecuentes</a>
+              
               <a 
                 href={waLink}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-full shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)] transition-all active:scale-95 text-lg"
+                className="mt-4 inline-flex items-center justify-center gap-2 px-6 py-4 bg-amber-500 text-slate-950 font-bold rounded-full w-full uppercase tracking-wider"
+              >
+                <MessageCircle className="w-5 h-5" />
+                Contacto Rápido
+              </a>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </nav>
+
+      {/* Hero Section Premium ZikZag - Full Screen */}
+      <section id="inicio" className="relative min-h-screen flex items-center pt-20 overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=80&w=2000" 
+            alt="Fondo de hero" 
+            className="w-full h-full object-cover object-center"
+          />
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-slate-950/70" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80" />
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-6 w-full text-center lg:text-left">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="max-w-3xl"
+          >
+            <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20">
+              <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+              <span className="text-sm font-medium tracking-widest text-slate-200 uppercase">Procesamiento Inmediato</span>
+            </div>
+            
+            <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-[1.05] mb-8">
+              Tus trámites oficiales, <br className="hidden md:block" />
+              <span className="text-amber-500 italic">sin filas</span> y en minutos.
+            </h1>
+            
+            <p className="text-lg md:text-2xl text-slate-300 mb-10 max-w-2xl leading-relaxed font-light mx-auto lg:mx-0">
+              Obtenemos tus actas, constancias y documentos del SAT, IMSS o Registro Civil de forma <strong className="font-semibold text-white">100% legal y segura</strong>.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+              <a 
+                href={waLink}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-full shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)] transition-all active:scale-95 text-lg"
               >
                 Solicitar trámite ahora
                 <ArrowRight className="w-5 h-5" />
               </a>
             </div>
-          </motion.div>
-
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95, x: 20 }}
-            animate={{ opacity: 1, scale: 1, x: 0 }}
-            transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-            className="relative lg:ml-10"
-          >
-            {/* The Asymmetric Image Container */}
-            <div className="relative z-10 aspect-[4/5] md:aspect-square lg:aspect-[4/5] rounded-br-[6rem] rounded-tl-[6rem] rounded-tr-2xl rounded-bl-2xl overflow-hidden shadow-2xl border-4 border-white">
-              <img 
-                src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=80&w=800" 
-                alt="Documentos oficiales en escritorio"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-slate-900/10 mix-blend-overlay"></div>
-            </div>
-            {/* Accent backdrop shape */}
-            <div className="absolute -inset-4 bg-amber-400 rounded-br-[6rem] rounded-tl-[6rem] rounded-tr-2xl rounded-bl-2xl -z-10 rotate-3 opacity-20"></div>
           </motion.div>
         </div>
       </section>
@@ -261,7 +302,7 @@ export default function App() {
       </section>
 
       {/* How it Works - ZikZag Layout */}
-      <section className="py-24 px-6 relative">
+      <section id="como-funciona" className="py-24 px-6 relative">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-20">
             <h2 className="font-serif text-4xl md:text-5xl font-bold text-slate-900 mb-4">
@@ -320,7 +361,7 @@ export default function App() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-24 px-6 bg-slate-900 text-slate-100 relative">
+      <section id="faq" className="py-24 px-6 bg-slate-900 text-slate-100 relative">
         {/* Geometric accent */}
         <div className="absolute left-0 bottom-0 w-64 h-64 bg-amber-500/10 rounded-tr-full blur-3xl pointer-events-none"></div>
 
